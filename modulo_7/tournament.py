@@ -16,28 +16,27 @@ def combat(first: tuple[Creature, BattleStrategy],
     print(stra2.act(cri2), end="\n\n")
 
 
-def battle(first: tuple[Creature, BattleStrategy],
-           second: tuple[Creature, BattleStrategy],
+def battle(first: list[tuple[tuple[Creature, BattleStrategy],
+                             tuple[Creature, BattleStrategy]]],
            verifi: bool = False) -> None:
-    cri1 = first[0]
-    stra1 = first[1]
-    cri2 = second[0]
-    stra2 = second[1]
-    try:
-        print("* Battle *")
-        print(cri1.describe())
-        print(" vs.")
-        print(cri2.describe())
-        print(" now fight!")
-        if verifi:
-            if stra1.is_valid(cri1) and stra2.is_valid(cri2):
-                combat(first, second)
-            else:
-                print("No Strategy compatible", end="\n\n")
-            return
-        combat(first, second)
-    except TypeError as e:
-        print(f"Battle error, aborting tournament: {e}", end="\n\n")
+    for i, j in first:
+        cri1, stra1 = i
+        cri2, stra2 = j
+        try:
+            print("* Battle *")
+            print(cri1.describe())
+            print(" vs.")
+            print(cri2.describe())
+            print(" now fight!")
+            if verifi:
+                if stra1.is_valid(cri1) and stra2.is_valid(cri2):
+                    combat((cri1, stra1), (cri2, stra2))
+                else:
+                    print("No Strategy compatible", end="\n\n")
+                return
+            combat((cri1, stra1), (cri2, stra2))
+        except TypeError as e:
+            print(f"Battle error, aborting tournament: {e}", end="\n\n")
 
 
 def print_strat(strat: BattleStrategy) -> None:
@@ -88,16 +87,14 @@ if __name__ == "__main__":
     hel = HealingCreatureFactory().create_base()
     print("Tournament 0 (basic)")
     print_combatients([(nor, flam), (defe, hel)])
-    print("*** Tournament ***")
     print("2 opponents involved", end="\n\n")
-    battle((flam, nor), (hel, defe))
+    battle([((flam, nor), (hel, defe))])
     print("Tournament 1 (error)")
     print_combatients([(agr, flam), (defe, hel)])
     print("2 opponents involved", end="\n\n")
-    battle((flam, agr), (hel, defe))
+    battle([((flam, agr), (hel, defe))])
     print("Tournament 2 (multiple)")
     print_combatients([(nor, aqu), (defe, hel), (agr, trans)])
     print("3 opponents involved", end="\n\n")
-    battle((aqu, nor), (hel, defe))
-    battle((aqu, nor), (trans, agr))
-    battle((hel, defe), (trans, agr))
+    battle([((aqu, nor), (hel, defe)), ((aqu, nor), (trans, agr)),
+            ((hel, defe), (trans, agr))])
