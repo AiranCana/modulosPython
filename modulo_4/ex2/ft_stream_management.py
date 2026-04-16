@@ -49,8 +49,8 @@ def writter(s: str) -> None:
     r = opten_good_text(s)
     sys.stdout.write(f"{r}\n\n")
     sys.stdout.write("---\n")
-    sys.stdout.flush()
     sys.stdout.write("Enter new file name (or empty):")
+    sys.stdout.flush()
     file1 = mysplit(sys.stdin.readline(), '\n')
     file = file1[0]
     if file != "":

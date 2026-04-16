@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ex0.creature import Creature
+from ex0 import Creature
 
 
 class HealCapability(ABC):
@@ -11,7 +11,7 @@ class HealCapability(ABC):
 
 class TransformCapability(ABC):
 
-    transformer: bool = False
+    _transformer: bool = False
 
     @abstractmethod
     def transform(self) -> str:

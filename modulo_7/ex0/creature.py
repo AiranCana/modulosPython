@@ -6,6 +6,10 @@ class Creature(ABC):
     _name: str
     _type: str
 
+    def __init__(self, name: str, types: str):
+        self._name = name
+        self._type = types
+
     @abstractmethod
     def attack(self) -> str:
         ...
