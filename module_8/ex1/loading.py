@@ -77,7 +77,10 @@ def main() -> None:
         helper(lis)
         return
     else:
-        analice()
+        try:
+            analice()
+        except Exception:
+            print("It has not been implemented what is necessary")
 
 
 if __name__ == "__main__":
