@@ -164,5 +164,6 @@ if __name__ == "__main__":
         g = [{'log_level': 'NOTICE', 'log_message': 'Connection to server'},
              {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}]
         procesing(ter, g, 2, "Log", "entry")
+        procesing(pri, d, 1, "Numeric")
     except Exception as e:
         print(f"Error detected: {e}")

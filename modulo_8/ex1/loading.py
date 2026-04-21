@@ -1,5 +1,7 @@
+#!usr/bin/env python3
 import importlib
 import importlib.metadata
+import sys
 
 
 def analice() -> None:
@@ -84,5 +86,13 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    en_vir = sys.prefix != sys.base_prefix
+    if en_vir:
+        main()
+    else:
+        print("It cannot be operated on the equipment. Run in a virtual"
+              " environment.")
+        print("python -m venv matrix_env")
+        print("source matrix_env/bin/activate # On Unix")
+        print("matrix_env\\Scripts\\activate # On Windows", end="\n\n")
     print("program closed")
