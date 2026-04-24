@@ -36,7 +36,6 @@ def main(objets: Type[SpaceStationModel], values: dict[str, Any]) -> None:
         print("Expected validation error:")
         lis = e.errors()
         for i in lis:
-            print(i)
             print(f"{i['msg']} in {i['loc']}")
         print()
 

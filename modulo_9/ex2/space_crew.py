@@ -36,19 +36,23 @@ class SpaceMissionModel(BaseModel):
     mission_status: str = "planned"
     budget_millions: float = Field(..., ge=1.0, le=10000.0)
 
-    def experience(crew: List[CrewMemberModel]) -> bool:
-        return True
+    def experience(self, crew: List[CrewMemberModel]) -> bool:
+        count = 0
+        for member in crew:
+            if member.years_experience >= 5:
+                count += 1
+        return (len(crew) / 2) <= count
 
     @model_validator(mode="after")
-    def validator(self) -> None:
+    def validator(self) -> "SpaceMissionModel":
         message: str = ""
         found = False
-        if not self.contact_id.startswith("M"):
+        if not self.mission_id.startswith("M"):
             message = message.join("The ID need to start with 'M'\n")
             found = True
         if not any(crew.rank in [Rank.CAPTAIN, Rank.COMMANDER]
                    for crew in self.crew):
-            message = message.join("the \n")
+            message = message.join("the crew need a captain or Commander\n")
             found = True
         if (self.duration_days >= 365 and not self.experience(self.crew)):
             message = message.join("The crew need more experience to"
@@ -66,22 +70,22 @@ def main(objets: Type[SpaceMissionModel], values: dict[str, Any]) -> None:
     try:
         print("=" * 40)
         ale: SpaceMissionModel = objets(**values)
-        print("Valid contact report:")
-        print(f"ID: {ale.contact_id}")
-        print(f"Type: {ale.contact_type}")
-        print(f"Location: {ale.location}")
-        print(f"Day: {ale.timestamp}")
-        print(f"Signal: {ale.signal_strength}/10")
-        print(f"Duration: {ale.duration_minutes} minutes")
-        print(f"Witnesses: {ale.witness_count}")
-        print(f"Message: {ale.message_received}")
-        print("Verificate:", end="")
-        print('Is Verificate' if ale.is_verified else 'Is NOT Verificates',
-              end="\n\n")
+        print("Valid mission created:")
+        print(f"Mission: {ale.mission_name}")
+        print(f"ID: {ale.mission_id}")
+        print(f"Destination: {ale.destination}")
+        print(f"Duration: {ale.duration_days} days")
+        print(f"Budget: ${ale.budget_millions}M")
+        print(f"Crew size: {len(ale.crew)}")
+        print("Crew members:")
+        for member in ale.crew:
+            print(f" - {member.name} ({member.rank}) - "
+                  f"{member.specialization}")
+        print()
     except (ValidationError, ValueError) as e:
         print("Expected validation error:")
         if isinstance(e, ValueError):
-            print(e.errors()[0]['msg'])
+            print(e, end="")
         else:
             print("\n\nhola\n\n")
             lis = e.errors()

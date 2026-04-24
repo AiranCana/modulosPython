@@ -26,7 +26,7 @@ class AlienContactModel(BaseModel):
     is_verified: bool = False
 
     @model_validator(mode="after")
-    def validator(self) -> None:
+    def validator(self) -> "AlienContactModel":
         message: str = ""
         found = False
         if not self.contact_id.startswith("AC"):
@@ -69,7 +69,7 @@ def main(objets: Type[AlienContactModel], values: dict[str, Any]) -> None:
     except (ValidationError, ValueError) as e:
         print("Expected validation error:")
         if isinstance(e, ValueError):
-            print(e.errors()[0]['msg'])
+            print(e)
         else:
             print("\n\nhola\n\n")
             lis = e.errors()
