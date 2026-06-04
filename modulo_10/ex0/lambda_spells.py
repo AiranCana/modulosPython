@@ -58,8 +58,8 @@ if __name__ == "__main__":
     print(f"\n\nTesting power filter... ({num})")
     print_mages(power_filter(mages, num))
     print("\n\nTesting spell transformer...")
-    for i in spell_transformer(spells):
-        print(f"{i} ", end="")
+    for j in spell_transformer(spells):
+        print(f"{j} ", end="")
     print(end="\n\n")
     itera = mage_stats(mages)
     print("Testing mage stats...\nIn: ")

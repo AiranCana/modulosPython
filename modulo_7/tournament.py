@@ -33,8 +33,8 @@ def battle(first: list[tuple[tuple[Creature, BattleStrategy],
                     combat((cri1, stra1), (cri2, stra2))
                 else:
                     print("No Strategy compatible", end="\n\n")
-                return
-            combat((cri1, stra1), (cri2, stra2))
+            else:
+                combat((cri1, stra1), (cri2, stra2))
         except TypeError as e:
             print(f"Battle error, aborting tournament: {e}", end="\n\n")
 

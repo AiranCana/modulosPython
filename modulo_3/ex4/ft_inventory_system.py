@@ -48,7 +48,7 @@ def found_inventory(stri: str) -> bool:
 
 
 def asign_invetori(argv: list[str]) -> None:
-    for i in argv[0:]:
+    for i in argv[1:]:
         if not found(i):
             print(f"Error - invalid parameter '{mysplit(i)[-1]}'")
         elif found_inventory(getVal(i)[0]):
